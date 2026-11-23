@@ -6,7 +6,7 @@
 /*/{Protheus.doc} TERMADIT
 Termo Aditivo ao Contrato Individual de Trabalho - EC 141/2026
 Modulo Gestao de Pessoas (SIGAGPE)
-Author: Giovanni Salomão Pereira
+Author: Giovanni Salomao Pereira
 Data: 23/11/2026
 /*/
 User Function TERMADIT()
