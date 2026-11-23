@@ -10,17 +10,21 @@ Author: Giovanni Salomao Pereira
 Data: 23/11/2026
 /*/
 User Function TERMADIT()
-    Local cPerg := "TERMADIT"
+    Local aPergs := {}
+    Local aRet   := {}
+    Local nTam   := TamSX3("RA_MAT")[1]
 
-    AjustaSX1(cPerg)
-    If !Pergunte(cPerg, .T.)
+    aAdd(aPergs, {1, "De Matrícula",  Space(nTam),                 "", "", "SRA", "", 60, .F.})
+    aAdd(aPergs, {1, "Até Matrícula", Replicate("Z", nTam),        "", "", "SRA", "", 60, .T.})
+
+    If !ParamBox(aPergs, "Termo Aditivo - EC 141/2026", @aRet)
         Return
     EndIf
 
-    Processa({|| ImpTermo()}, "Termo Aditivo", "Gerando relatório...")
+    Processa({|| ImpTermo(aRet[1], aRet[2])}, "Termo Aditivo", "Gerando relatório...")
 Return
 
-Static Function ImpTermo()
+Static Function ImpTermo(cDe, cAte)
     Local oPrn
     Local cQuery := ""
     Local cAlias := GetNextAlias()
@@ -30,12 +34,14 @@ Static Function ImpTermo()
     Local nLin   := 0
     Local cDtExt := ""
     Local cTurno := ""
+    Local cNome := ""
+    Local cCPF  := ""
 
     cQuery := "SELECT RA_MAT, RA_NOMECMP, RA_NOME, RA_CIC, RA_TNOTRAB "
     cQuery += "FROM " + RetSqlName("SRA") + " SRA "
     cQuery += "WHERE SRA.D_E_L_E_T_ = ' ' "
     cQuery += "AND RA_FILIAL = '" + xFilial("SRA") + "' "
-    cQuery += "AND RA_MAT BETWEEN '" + MV_PAR01 + "' AND '" + MV_PAR02 + "' "
+    cQuery += "AND RA_MAT BETWEEN '" + cDe + "' AND '" + cAte + "' "
     cQuery += "ORDER BY RA_MAT"
     cQuery := ChangeQuery(cQuery)
     dbUseArea(.T., "TOPCONN", TcGenQry(,,cQuery), cAlias, .F., .T.)
@@ -119,8 +125,8 @@ Static Function Par(oPrn, nLin, cTxt, oFnt, nEspaco)
     oPrn:SayAlign(nLin, 40, cTxt, oFnt, nLarg, nTotal, , 3, 0)
 Return nLin + nTotal + 12
 
-Static Function AjustaSX1(cPerg)
-    // Pergunta cadastrada via configurador (SX1) ou PutSx1 conforme release
-    PutSx1(cPerg,"01","De Matrícula ?","","","mv_ch1","C",6,0,0,"G","","SRA","","","mv_par01")
-    PutSx1(cPerg,"02","Até Matrícula ?","","","mv_ch2","C",6,0,0,"G","","SRA","","","mv_par02")
-Return
+//Static Function AjustaSX1(cPerg)
+// Pergunta cadastrada via configurador (SX1) ou PutSx1 conforme release
+//    PutSx1(cPerg,"01","De Matrícula ?","","","mv_ch1","C",6,0,0,"G","","SRA","","","mv_par01")
+//    PutSx1(cPerg,"02","Até Matrícula ?","","","mv_ch2","C",6,0,0,"G","","SRA","","","mv_par02")
+//Return
