@@ -84,7 +84,7 @@ Static Function ImpTermo()
 
         oPrn:Say(nLin, 40, "CLÁUSULA SEGUNDA - DA IRREDUTIBILIDADE SALARIAL", oFNeg)
         nLin += 25
-        nLin := Par(oPrn, nLin, "Intervalo 2 Intervalo 3 A redução da carga horária semanal operada por este instrumento não acarretará qualquer redução nominal, proporcional ou de outra natureza sobre o salário percebido pelo EMPREGADO, mantendo-se o valor integral de sua remuneração.", oFTxt, 60)
+        nLin := Par(oPrn, nLin, "A redução da carga horária semanal operada por este instrumento não acarretará qualquer redução nominal, proporcional ou de outra natureza sobre o salário percebido pelo EMPREGADO, mantendo-se o valor integral de sua remuneração.", oFTxt, 60)
 
         oPrn:Say(nLin, 40, "CLÁUSULA TERCEIRA - RATIFICAÇÃO", oFNeg)
         nLin += 25
